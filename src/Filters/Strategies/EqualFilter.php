@@ -23,7 +23,8 @@ class EqualFilter extends Filter
     {
         return function ($query) {
             foreach ($this->values as $value) {
-                $query->where($this->column, $value);
+                // Make the column and value case-insensitive using LOWER function
+                $query->whereRaw('LOWER(' . $this->column . ') = ?', [strtolower($value)]);
             }
         };
     }
